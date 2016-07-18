@@ -20,7 +20,7 @@ class HealthViewController: UIViewController {
         super.viewDidLoad()
         
         self.pedemeter = CMPedometer()
-        
+
     }
 
     override func didReceiveMemoryWarning() {
@@ -36,9 +36,11 @@ class HealthViewController: UIViewController {
         for i in 1...7 {
             
         let calendar = NSCalendar.currentCalendar()
-        let startDate = calendar.dateByAddingUnit(.Day, value: -i, toDate: NSDate(), options: [])
+            let startDate = calendar.dateByAddingUnit(.Day, value: -i, toDate: NSDate(), options: [])
         
         self.pedemeter.queryPedometerDataFromDate(startDate!, toDate: NSDate()) { (data :CMPedometerData?, error :NSError?) in
+            
+            if error == nil {
             
             if let data = data {
                 
@@ -51,21 +53,23 @@ class HealthViewController: UIViewController {
             previousValue = (data.numberOfSteps).integerValue
                 
             print(self.numberOfStepsArray)
-
+                
+                
+                if (self.numberOfStepsArray.count == 7) {
+                    
+                    dispatch_async(dispatch_get_main_queue(),
+                    {
+                        
+                    self.graphView = GraphView(frame: CGRectMake(10,200,350,350))
+                    self.graphView.backgroundColor = UIColor.redColor()
+                    self.view.addSubview(self.graphView)
+                    self.graphView.plot((self.numberOfStepsArray))
+                        
+                })
+              }
             }
-            
+           }
           }
-            if (self.numberOfStepsArray.count == 7) {
-                
-                graphView = GraphView(frame: CGRectMake(10,200,350,350))
-                
-                graphView.backgroundColor = UIColor.redColor()
-                
-                self.view.addSubview(graphView)
-                print(self.numberOfStepsArray)
-               // graphView.setNeedsDisplay()
-                
-            }
         }
         
     } //end of IBAction
