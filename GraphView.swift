@@ -23,19 +23,19 @@ class GraphView: UIView {
         
        }
     
-    func plot(noOfSteps :[NSNumber]) {
+    func plot(_ noOfSteps :[NSNumber]) {
         
         self.noOfSteps = noOfSteps
         self.setNeedsDisplay()
     }
     
-    override func drawRect(rect: CGRect) {
+    override func draw(_ rect: CGRect) {
 
         var x = 25
         for i in  0...6 {
       
-        UIColor.greenColor().setFill()
-        let bar = UIBezierPath(rect: CGRect(x: x, y: 350, width: 30, height:(-1 * noOfSteps[i].integerValue)/20))
+        UIColor.green.setFill()
+        let bar = UIBezierPath(rect: CGRect(x: x, y: 350, width: 30, height:(-1 * noOfSteps[i].intValue)/20))
         bar.fill()
         x += 45
             

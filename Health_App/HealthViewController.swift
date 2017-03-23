@@ -35,10 +35,12 @@ class HealthViewController: UIViewController {
         
         for i in 1...7 {
             
-        let calendar = NSCalendar.currentCalendar()
-            let startDate = calendar.dateByAddingUnit(.Day, value: -i, toDate: NSDate(), options: [])
+        let calendar = NSCalendar.current
+            let startDate = calendar.date(byAdding: .day, value: -i, to: Date() ) //dateByAddingUnit(.Day, value: -i, toDate: NSDate(), options: [])
         
-        self.pedemeter.queryPedometerDataFromDate(startDate!, toDate: NSDate()) { (data :CMPedometerData?, error :NSError?) in
+            func queryPedometerData(from start: startDate,
+                                    to end: Date(),,
+                                    { (data :CMPedometerData?, error :NSError?) in
             
             if error == nil {
             
@@ -69,9 +71,9 @@ class HealthViewController: UIViewController {
               }
             }
            }
-          }
-        }
+          })
         
-    } //end of IBAction
+        
+     //end of IBAction
     
 }
